@@ -27,6 +27,10 @@ public class ComponentRendererConnector extends AbstractRendererConnector<String
 		}
 
 		private ComponentConnector getWidgetConnectorWithId(String data) {
+			if (data == null) {
+				return null;
+			}
+			
 			List<ServerConnector> children = parent.getParent().getChildren();
 			for (ServerConnector c : children) {
 				if (c instanceof ComponentConnector && c.getConnectorId().equals(data)) {
