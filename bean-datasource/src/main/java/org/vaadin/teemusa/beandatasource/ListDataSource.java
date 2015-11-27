@@ -9,13 +9,13 @@ import org.vaadin.teemusa.TypedComponent;
 import org.vaadin.teemusa.beandatasource.interfaces.DataSource;
 import org.vaadin.teemusa.beandatasource.interfaces.DataSource.HasPaging;
 
-public class ListContainer<T> implements DataSource<T>, HasPaging<T> {
+public class ListDataSource<T> implements DataSource<T>, HasPaging<T> {
 
 	protected List<T> repo;
 
 	private DataProvider<T> dataProvider;
 
-	public ListContainer(Collection<T> beans) {
+	public ListDataSource(Collection<T> beans) {
 		if (beans instanceof List) {
 			repo = (List<T>) beans;
 		} else {
