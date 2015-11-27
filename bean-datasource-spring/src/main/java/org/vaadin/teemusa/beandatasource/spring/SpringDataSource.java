@@ -8,7 +8,6 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Component;
 import org.vaadin.teemusa.TypedComponent;
 import org.vaadin.teemusa.beandatasource.DataProvider;
-import org.vaadin.teemusa.beandatasource.communication.CollectionDataProvider;
 import org.vaadin.teemusa.beandatasource.interfaces.DataSource;
 
 import com.vaadin.data.util.AbstractBeanContainer.BeanIdResolver;
