@@ -10,10 +10,7 @@
 
 	<modules>
 		<module>bean-datasource</module>
-		<module>bean-grid</module>
 		<module>bean-datasource-spring</module>
-		<module>bean-grid-demo</module>
-		<module>bean-grid-spring-demo</module>
 	</modules>
 
 	<properties>
