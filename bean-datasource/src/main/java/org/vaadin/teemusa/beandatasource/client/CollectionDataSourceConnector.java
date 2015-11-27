@@ -19,7 +19,7 @@ import elemental.json.JsonArray;
 import elemental.json.JsonObject;
 
 @Connect(CollectionDataProvider.class)
-public class RpcListDataSourceConnector extends AbstractExtensionConnector {
+public class CollectionDataSourceConnector extends AbstractExtensionConnector {
 
 	public class RpcListDataSource implements DataSource<JsonObject> {
 

@@ -17,7 +17,7 @@ package org.vaadin.teemusa.beandatasource.interfaces;
 
 import java.io.Serializable;
 
-import org.vaadin.teemusa.beandatasource.ContainerDataProvider;
+import org.vaadin.teemusa.beandatasource.DataProvider;
 
 import com.vaadin.ui.Grid.AbstractRenderer;
 import com.vaadin.ui.renderers.Renderer;

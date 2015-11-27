@@ -3,15 +3,15 @@ package org.vaadin.teemusa.beandatasource.interfaces;
 import java.util.Iterator;
 
 import org.vaadin.teemusa.TypedComponent;
-import org.vaadin.teemusa.beandatasource.ContainerDataProvider;
+import org.vaadin.teemusa.beandatasource.DataProvider;
 
-public interface CollectionContainer<T> extends Iterable<T> {
+public interface DataSource<T> extends Iterable<T> {
 
 	public interface HasPaging<T> {
 		Iterable<T> getPage(int firstIndex, int count);
 	}
 
-	ContainerDataProvider<T> extend(TypedComponent<T> component);
+	DataProvider<T> extend(TypedComponent<T> component);
 
 	long size();
 

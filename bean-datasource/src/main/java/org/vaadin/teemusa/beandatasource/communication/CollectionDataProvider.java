@@ -2,21 +2,21 @@ package org.vaadin.teemusa.beandatasource.communication;
 
 import java.util.Collections;
 
-import org.vaadin.teemusa.beandatasource.ContainerDataProvider;
-import org.vaadin.teemusa.beandatasource.interfaces.CollectionContainer;
+import org.vaadin.teemusa.beandatasource.DataProvider;
+import org.vaadin.teemusa.beandatasource.interfaces.DataSource;
 
-public class CollectionDataProvider<T> extends ContainerDataProvider<T> {
+public class CollectionDataProvider<T> extends DataProvider<T> {
 
-	private final CollectionContainer<T> container;
+	private final DataSource<T> container;
 	private boolean shouldPushRows;
 
-	public CollectionDataProvider(CollectionContainer<T> container, BeanKeyMapper<T> keyMapper) {
+	public CollectionDataProvider(DataSource<T> container, BeanKeyMapper<T> keyMapper) {
 		super(keyMapper);
 
 		this.container = container;
 	}
 
-	public CollectionDataProvider(CollectionContainer<T> container) {
+	public CollectionDataProvider(DataSource<T> container) {
 		this(container, new KeyMapper<T>());
 	}
 

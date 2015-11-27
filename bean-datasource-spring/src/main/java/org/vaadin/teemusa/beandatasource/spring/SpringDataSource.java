@@ -7,16 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Component;
 import org.vaadin.teemusa.TypedComponent;
-import org.vaadin.teemusa.beandatasource.ContainerDataProvider;
+import org.vaadin.teemusa.beandatasource.DataProvider;
 import org.vaadin.teemusa.beandatasource.communication.CollectionDataProvider;
-import org.vaadin.teemusa.beandatasource.communication.PagedCollectionDataProvider;
-import org.vaadin.teemusa.beandatasource.interfaces.CollectionContainer;
+import org.vaadin.teemusa.beandatasource.interfaces.DataSource;
 
 import com.vaadin.data.util.AbstractBeanContainer.BeanIdResolver;
 
 @Component
-public abstract class SpringRepositoryContainer<T, I extends Serializable, R extends CrudRepository<T, I>>
-		implements CollectionContainer<T> {
+public abstract class SpringDataSource<T, I extends Serializable, R extends CrudRepository<T, I>>
+		implements DataSource<T> {
 
 	@Autowired
 	protected R repo;
@@ -24,9 +23,9 @@ public abstract class SpringRepositoryContainer<T, I extends Serializable, R ext
 	@Autowired
 	private SpringBeanKeyMapper<T, I> keyMapper;
 
-	private ContainerDataProvider<T> dataProvider;
+	private DataProvider<T> dataProvider;
 
-	public SpringRepositoryContainer() {
+	public SpringDataSource() {
 	}
 
 	public void setIdResolver(BeanIdResolver<I, T> resolver) {
@@ -88,17 +87,12 @@ public abstract class SpringRepositoryContainer<T, I extends Serializable, R ext
 	}
 
 	@Override
-	public ContainerDataProvider<T> extend(TypedComponent<T> component) {
+	public DataProvider<T> extend(TypedComponent<T> component) {
 		if (keyMapper == null) {
 			throw new IllegalStateException("No keymapper set!");
 		}
 
-		if (this instanceof HasPaging) {
-			dataProvider = new PagedCollectionDataProvider<T>(this, keyMapper);
-		} else {
-			dataProvider = new CollectionDataProvider<T>(this, keyMapper);
-		}
-		dataProvider.extend(component);
+		dataProvider = DataProvider.extend(component, this, keyMapper);
 		return dataProvider;
 	}
 

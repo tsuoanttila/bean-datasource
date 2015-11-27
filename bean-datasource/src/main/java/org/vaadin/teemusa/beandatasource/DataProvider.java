@@ -10,18 +10,23 @@ import org.vaadin.teemusa.TypedComponent;
 import org.vaadin.teemusa.beandatasource.client.DataDropRpc;
 import org.vaadin.teemusa.beandatasource.client.DataProviderRpc;
 import org.vaadin.teemusa.beandatasource.communication.BeanKeyMapper;
+import org.vaadin.teemusa.beandatasource.communication.CollectionDataProvider;
+import org.vaadin.teemusa.beandatasource.communication.PagedDataProvider;
 import org.vaadin.teemusa.beandatasource.interfaces.DataGenerator;
+import org.vaadin.teemusa.beandatasource.interfaces.DataSource;
+import org.vaadin.teemusa.beandatasource.interfaces.DataSource.HasPaging;
 
 import com.vaadin.server.AbstractClientConnector;
 import com.vaadin.server.AbstractExtension;
 import com.vaadin.server.JsonCodec;
+import com.vaadin.server.KeyMapper;
 import com.vaadin.shared.ui.grid.GridState;
 
 import elemental.json.Json;
 import elemental.json.JsonArray;
 import elemental.json.JsonObject;
 
-public abstract class ContainerDataProvider<T> extends AbstractExtension {
+public abstract class DataProvider<T> extends AbstractExtension {
 
 	/**
 	 * Class for keeping track of current items and ValueChangeListeners.
@@ -102,7 +107,7 @@ public abstract class ContainerDataProvider<T> extends AbstractExtension {
 	private final Set<T> updatedItemIds = new LinkedHashSet<T>();
 	private boolean refreshCache;
 
-	public ContainerDataProvider(BeanKeyMapper<T> beanKeyMapper) {
+	public DataProvider(BeanKeyMapper<T> beanKeyMapper) {
 		registerRpc(new DataDropRpc() {
 
 			@Override
@@ -141,7 +146,7 @@ public abstract class ContainerDataProvider<T> extends AbstractExtension {
 		super.beforeClientResponse(initial);
 	}
 
-	public void extend(TypedComponent<T> component) {
+	protected void extend(TypedComponent<T> component) {
 		if (component instanceof AbstractClientConnector) {
 			super.extend((AbstractClientConnector) component);
 		} else {
@@ -234,4 +239,27 @@ public abstract class ContainerDataProvider<T> extends AbstractExtension {
 	public abstract void removeBean(T bean);
 
 	public abstract void addBean(T bean);
+
+	public static <B> DataProvider<B> extend(TypedComponent<B> c, DataSource<B> ds) {
+		return DataProvider.extend(c, ds, null);
+	}
+
+	public static <B> DataProvider<B> extend(TypedComponent<B> c, DataSource<B> ds, BeanKeyMapper<B> k) {
+		DataProvider<B> dataProvider;
+		if (ds instanceof HasPaging) {
+			if (k == null) {
+				dataProvider = new PagedDataProvider<B>(ds);
+			} else {
+				dataProvider = new PagedDataProvider<B>(ds, k);
+			}
+		} else {
+			if (k == null) {
+				dataProvider = new CollectionDataProvider<B>(ds);
+			} else {
+				dataProvider = new CollectionDataProvider<B>(ds, k);
+			}
+		}
+		dataProvider.extend(c);
+		return dataProvider;
+	}
 }

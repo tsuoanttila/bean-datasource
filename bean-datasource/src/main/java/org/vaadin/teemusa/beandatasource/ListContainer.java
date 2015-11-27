@@ -6,15 +6,14 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.vaadin.teemusa.TypedComponent;
-import org.vaadin.teemusa.beandatasource.communication.PagedCollectionDataProvider;
-import org.vaadin.teemusa.beandatasource.interfaces.CollectionContainer;
-import org.vaadin.teemusa.beandatasource.interfaces.CollectionContainer.HasPaging;
+import org.vaadin.teemusa.beandatasource.interfaces.DataSource;
+import org.vaadin.teemusa.beandatasource.interfaces.DataSource.HasPaging;
 
-public class ListContainer<T> implements CollectionContainer<T>, HasPaging<T> {
+public class ListContainer<T> implements DataSource<T>, HasPaging<T> {
 
 	protected List<T> repo;
 
-	private ContainerDataProvider<T> dataProvider;
+	private DataProvider<T> dataProvider;
 
 	public ListContainer(Collection<T> beans) {
 		if (beans instanceof List) {
@@ -36,9 +35,8 @@ public class ListContainer<T> implements CollectionContainer<T>, HasPaging<T> {
 	}
 
 	@Override
-	public ContainerDataProvider<T> extend(TypedComponent<T> component) {
-		dataProvider = new PagedCollectionDataProvider<T>(this);
-		dataProvider.extend(component);
+	public DataProvider<T> extend(TypedComponent<T> component) {
+		dataProvider = DataProvider.extend(component, this);
 		return dataProvider;
 	}
 

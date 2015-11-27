@@ -2,24 +2,24 @@ package org.vaadin.teemusa.beandatasource.communication;
 
 import java.util.Collections;
 
-import org.vaadin.teemusa.beandatasource.ContainerDataProvider;
+import org.vaadin.teemusa.beandatasource.DataProvider;
 import org.vaadin.teemusa.beandatasource.client.DataRequestRpc;
-import org.vaadin.teemusa.beandatasource.interfaces.CollectionContainer;
-import org.vaadin.teemusa.beandatasource.interfaces.CollectionContainer.HasPaging;
+import org.vaadin.teemusa.beandatasource.interfaces.DataSource;
+import org.vaadin.teemusa.beandatasource.interfaces.DataSource.HasPaging;
 
 import com.vaadin.shared.ui.grid.Range;
 
-public class PagedCollectionDataProvider<T> extends ContainerDataProvider<T> {
+public class PagedDataProvider<T> extends DataProvider<T> {
 
 	private HasPaging<T> paging;
-	private CollectionContainer<T> container;
+	private DataSource<T> container;
 
-	public PagedCollectionDataProvider(CollectionContainer<T> container) {
+	public PagedDataProvider(DataSource<T> container) {
 		this(container, new KeyMapper<T>());
 	}
 
 	@SuppressWarnings("unchecked")
-	public PagedCollectionDataProvider(CollectionContainer<T> container, BeanKeyMapper<T> beanKeyMapper) {
+	public PagedDataProvider(DataSource<T> container, BeanKeyMapper<T> beanKeyMapper) {
 		super(beanKeyMapper);
 
 		if (container instanceof HasPaging) {

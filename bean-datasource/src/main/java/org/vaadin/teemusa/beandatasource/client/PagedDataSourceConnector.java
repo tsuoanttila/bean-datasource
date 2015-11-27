@@ -3,7 +3,7 @@ package org.vaadin.teemusa.beandatasource.client;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import org.vaadin.teemusa.beandatasource.communication.PagedCollectionDataProvider;
+import org.vaadin.teemusa.beandatasource.communication.PagedDataProvider;
 
 import com.vaadin.client.ServerConnector;
 import com.vaadin.client.data.AbstractRemoteDataSource;
@@ -17,8 +17,8 @@ import elemental.json.Json;
 import elemental.json.JsonArray;
 import elemental.json.JsonObject;
 
-@Connect(PagedCollectionDataProvider.class)
-public class ContainerDataSourceConnector extends AbstractExtensionConnector {
+@Connect(PagedDataProvider.class)
+public class PagedDataSourceConnector extends AbstractExtensionConnector {
 
 	public class RpcDataSource extends AbstractRemoteDataSource<JsonObject> {
 
