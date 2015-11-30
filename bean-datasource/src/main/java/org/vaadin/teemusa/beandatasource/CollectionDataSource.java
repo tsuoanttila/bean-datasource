@@ -50,12 +50,20 @@ public class CollectionDataSource<T> implements DataSource<T> {
 
 	@Override
 	public boolean add(T e) {
-		return repo.add(e);
+		if (repo.add(e)) {
+			dataProvider.addBean(e);
+			return true;
+		}
+		return false;
 	}
 
 	@Override
 	public boolean remove(T o) {
-		return repo.remove(o);
+		if (repo.remove(o)) {
+			dataProvider.removeBean(o);
+			return true;
+		}
+		return false;
 	}
 
 	@Override

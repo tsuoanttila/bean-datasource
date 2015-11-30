@@ -42,8 +42,9 @@ public class PagedDataProvider<T> extends DataProvider<T> {
 		super.beforeClientResponse(initial);
 
 		if (initial) {
-			updateSize(container.size());
-			pushRowData(0, 40, 0, 0);
+			long size = container.size();
+			updateSize(size);
+			pushRowData(0, (int) Math.min(size, 40), 0, 0);
 		}
 	}
 
